@@ -1,3 +1,4 @@
+# The default connection reuses the current user name. Override.
 user <- "postgres"
 
 # Skip the following tests unless the tests can find a PostgreSQL database.
