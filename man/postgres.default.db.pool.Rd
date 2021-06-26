@@ -7,8 +7,11 @@
 postgres.default.db.pool(...)
 }
 \arguments{
-\item{...}{Extra arguments for \code{RPostgres::\link[RPostgres]{postgresDefault}}}
+\item{...}{Extra arguments for
+\code{RPostgres::\link[RPostgres]{postgresDefault}}}
 }
 \description{
-Lazily creates a default pool for PostgreSQL connections. Call this first at some point in your application's initialisation procedure. Raises an error if a new default pool cannot connect to the database.
+Lazily creates a default pool for PostgreSQL connections. Call this first at
+some point in your application's initialisation procedure. Raises an error if
+a new default pool cannot connect to the database.
 }

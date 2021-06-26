@@ -7,12 +7,14 @@
 wait.for.notify(...)
 }
 \arguments{
-\item{...}{Extra arguments for PostgreSQL notification wait, \code{RPostgres::\link[RPostgres]{postgresWaitForNotify}}.
+\item{...}{Extra arguments for PostgreSQL notification wait,
+\code{RPostgres::\link[RPostgres]{postgresWaitForNotify}}.
 Available parameters include:
 \itemize{
 \item timeout Seconds to wait, one by default.
 }}
 }
 \description{
-Uses the default pool. The default pool uses the default PostgreSQL connection.
+Uses the default pool. The default pool uses the default PostgreSQL
+connection.
 }
