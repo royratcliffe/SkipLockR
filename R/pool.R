@@ -1,4 +1,4 @@
-db.pool <- NULL
+db <- new.env()
 
 #' Default PostgreSQL database pool
 #'
@@ -11,11 +11,11 @@ db.pool <- NULL
 #' @return Database pool, an environment
 #' @export
 postgres.default.db.pool <- function(...) {
-  if (is.null(db.pool)) {
-    db.pool <<- pool::dbPool(RPostgres::Postgres(), ...)
-    on.exit(pool::poolClose(db.pool))
+  if (is.null(db$pool)) {
+    assign("pool", pool::dbPool(RPostgres::Postgres(), ...), envir = db)
+    on.exit(pool::poolClose(db$pool))
   }
-  db.pool
+  db$pool
 }
 
 #' Wait for any PostgreSQL notification
@@ -30,7 +30,7 @@ postgres.default.db.pool <- function(...) {
 #' @export
 wait.for.notify <- function(...) {
   notify <- NULL
-  pool::poolWithTransaction(db.pool, function(conn)
+  pool::poolWithTransaction(db$pool, function(conn)
     notify <<- RPostgres::postgresWaitForNotify(conn, ...))
   notify
 }
