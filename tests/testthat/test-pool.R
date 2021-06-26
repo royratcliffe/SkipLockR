@@ -14,3 +14,7 @@ skip_if_not(suppressMessages(RPostgres::postgresHasDefault(user = user)), "defau
 test_that("default works", {
   expect_type(postgres.default.db.pool(user = user), "environment")
 })
+
+test_that("static pool", {
+  expect_identical(postgres.default.db.pool(user = user), postgres.default.db.pool(user = user))
+})
