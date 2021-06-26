@@ -8,7 +8,10 @@ postgres.default.db.pool(...)
 }
 \arguments{
 \item{...}{Extra arguments for
-\code{RPostgres::\link[RPostgres]{postgresDefault}}}
+\code{pool::\link[pool]{dbPool}}}
+}
+\value{
+Database pool, an environment
 }
 \description{
 Lazily creates a default pool for PostgreSQL connections. Call this first at

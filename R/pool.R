@@ -7,10 +7,14 @@ db.pool <- NULL
 #' a new default pool cannot connect to the database.
 #'
 #' @param ... Extra arguments for
-#'   \code{RPostgres::\link[RPostgres]{postgresDefault}}
+#'   \code{pool::\link[pool]{dbPool}}
+#' @return Database pool, an environment
 #' @export
 postgres.default.db.pool <- function(...) {
-  if (is.null(db.pool)) db.pool <<- pool::dbPool(RPostgres::postgresDefault(...))
+  if (is.null(db.pool)) {
+    db.pool <<- pool::dbPool(RPostgres::Postgres(), ...)
+    on.exit(pool::poolClose(db.pool))
+  }
   db.pool
 }
 
