@@ -9,12 +9,15 @@ user <- "postgres"
 #   PGUSER, PGPASSWORD, and PGDATABASE, are defined and
 #   point to your database.
 #
-skip_if_not(suppressMessages(RPostgres::postgresHasDefault(user = user)), "default postgres database required but is not found")
+skip_if_not(
+  suppressMessages(RPostgres::postgresHasDefault(user = user)),
+  "default postgres database required but is not found")
 
 test_that("default works", {
   expect_type(postgres.default.db.pool(user = user), "environment")
 })
 
 test_that("static pool", {
-  expect_identical(postgres.default.db.pool(user = user), postgres.default.db.pool(user = user))
+  pool <- postgres.default.db.pool(user = user)
+  expect_identical(pool, postgres.default.db.pool(user = user))
 })
