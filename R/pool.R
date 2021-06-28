@@ -31,7 +31,7 @@ withTransaction <- function(func) pool::poolWithTransaction(db$pool, func)
 #'   * timeout Seconds to wait, one by default.
 #' @export
 waitForNotify <- function(...) {
-  notify <- NULL
-  withTransaction(function(conn) notify <<- RPostgres::postgresWaitForNotify(conn, ...))
-  notify
+  conn <- pool::poolCheckout(db$pool)
+  on.exit(pool::poolReturn(conn))
+  RPostgres::postgresWaitForNotify(conn, ...)
 }
