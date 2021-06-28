@@ -19,7 +19,7 @@ postgres.default.db.pool <- function(...) {
 #' Call function with pooled PostgreSQL connection
 #' @param func Function called with one database connection argument
 #' @export
-with.transaction <- function(func) pool::poolWithTransaction(db$pool, func)
+withTransaction <- function(func) pool::poolWithTransaction(db$pool, func)
 
 #' Wait for any PostgreSQL notification
 #'
@@ -33,7 +33,7 @@ with.transaction <- function(func) pool::poolWithTransaction(db$pool, func)
 #' @export
 wait.for.notify <- function(...) {
   notify <- NULL
-  with.transaction(function(conn)
+  withTransaction(function(conn)
     notify <<- RPostgres::postgresWaitForNotify(conn, ...))
   notify
 }
