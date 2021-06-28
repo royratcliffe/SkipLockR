@@ -10,7 +10,7 @@ on.exit(if (!is.null(db$pool)) pool::poolClose(db$pool))
 #' @param ... Extra arguments for \code{pool::\link[pool]{dbPool}}
 #' @return Database pool, an environment
 #' @export
-postgres.default.db.pool <- function(...) {
+postgresDefaultDBPool <- function(...) {
   if (is.null(db$pool)) assign("pool", pool::dbPool(RPostgres::Postgres(), ...), envir = db)
   db$pool
 }
@@ -30,7 +30,7 @@ withTransaction <- function(func) pool::poolWithTransaction(db$pool, func)
 #'   Available parameters include:
 #'   * timeout Seconds to wait, one by default.
 #' @export
-wait.for.notify <- function(...) {
+waitForNotify <- function(...) {
   notify <- NULL
   withTransaction(function(conn) notify <<- RPostgres::postgresWaitForNotify(conn, ...))
   notify

@@ -14,10 +14,10 @@ skip_if_not(
   "default postgres database required but is not found")
 
 test_that("default works", {
-  expect_type(postgres.default.db.pool(user = user), "environment")
+  expect_type(postgresDefaultDBPool(user = user), "environment")
 })
 
 test_that("static pool", {
-  pool <- postgres.default.db.pool(user = user)
-  expect_identical(pool, postgres.default.db.pool(user = user))
+  pool <- postgresDefaultDBPool(user = user)
+  expect_identical(pool, postgresDefaultDBPool(user = user))
 })
