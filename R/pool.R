@@ -32,7 +32,6 @@ withTransaction <- function(func) pool::poolWithTransaction(db$pool, func)
 #' @export
 wait.for.notify <- function(...) {
   notify <- NULL
-  withTransaction(function(conn)
-    notify <<- RPostgres::postgresWaitForNotify(conn, ...))
+  withTransaction(function(conn) notify <<- RPostgres::postgresWaitForNotify(conn, ...))
   notify
 }
