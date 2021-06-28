@@ -7,8 +7,7 @@
 postgres.default.db.pool(...)
 }
 \arguments{
-\item{...}{Extra arguments for
-\code{pool::\link[pool]{dbPool}}}
+\item{...}{Extra arguments for \code{pool::\link[pool]{dbPool}}}
 }
 \value{
 Database pool, an environment
