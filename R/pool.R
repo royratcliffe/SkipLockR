@@ -11,7 +11,8 @@ on.exit(if (!is.null(db$pool)) pool::poolClose(db$pool))
 #' @return Database pool, an environment
 #' @export
 postgresDefaultDBPool <- function(...) {
-  if (is.null(db$pool)) assign("pool", pool::dbPool(RPostgres::Postgres(), ...), envir = db)
+  if (is.null(db$pool))
+    assign("pool", pool::dbPool(RPostgres::Postgres(), ...), envir = db)
   db$pool
 }
 
