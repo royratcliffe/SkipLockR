@@ -1,4 +1,5 @@
 db <- new.env()
+on.exit(if (!is.null(db$pool)) pool::poolClose(db$pool))
 
 #' Default PostgreSQL database pool
 #'
@@ -6,17 +7,18 @@ db <- new.env()
 #' some point in your application's initialisation procedure. Raises an error if
 #' a new default pool cannot connect to the database.
 #'
-#' @param ... Extra arguments for
-#'   \code{pool::\link[pool]{dbPool}}
+#' @param ... Extra arguments for \code{pool::\link[pool]{dbPool}}
 #' @return Database pool, an environment
 #' @export
-postgres.default.db.pool <- function(...) {
-  if (is.null(db$pool)) {
-    assign("pool", pool::dbPool(RPostgres::Postgres(), ...), envir = db)
-    on.exit(pool::poolClose(db$pool))
-  }
+postgresDefaultDBPool <- function(...) {
+  if (is.null(db$pool)) assign("pool", pool::dbPool(RPostgres::Postgres(), ...), envir = db)
   db$pool
 }
+
+#' Call function with pooled PostgreSQL connection
+#' @param func Function called with one database connection argument
+#' @export
+withTransaction <- function(func) pool::poolWithTransaction(db$pool, func)
 
 #' Wait for any PostgreSQL notification
 #'
@@ -28,9 +30,8 @@ postgres.default.db.pool <- function(...) {
 #'   Available parameters include:
 #'   * timeout Seconds to wait, one by default.
 #' @export
-wait.for.notify <- function(...) {
-  notify <- NULL
-  pool::poolWithTransaction(db$pool, function(conn)
-    notify <<- RPostgres::postgresWaitForNotify(conn, ...))
-  notify
+waitForNotify <- function(...) {
+  conn <- pool::poolCheckout(db$pool)
+  on.exit(pool::poolReturn(conn))
+  RPostgres::postgresWaitForNotify(conn, ...)
 }
