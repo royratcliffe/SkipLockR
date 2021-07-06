@@ -11,7 +11,8 @@ on.exit(if (!is.null(db$pool)) pool::poolClose(db$pool))
 #' @return Database pool, an environment
 #' @export
 postgresDefaultDBPool <- function(...) {
-  if (is.null(db$pool)) assign("pool", pool::dbPool(RPostgres::Postgres(), ...), envir = db)
+  if (is.null(db$pool))
+    assign("pool", pool::dbPool(RPostgres::Postgres(), ...), envir = db)
   db$pool
 }
 
@@ -19,6 +20,15 @@ postgresDefaultDBPool <- function(...) {
 #' @param func Function called with one database connection argument
 #' @export
 withTransaction <- function(func) pool::poolWithTransaction(db$pool, func)
+
+#' Call function with pooled connection
+#' @param what Called with one database connection argument
+#' @export
+withConnection <- function(what) {
+  conn <- pool::poolCheckout(db$pool)
+  on.exit(pool::poolReturn(conn))
+  do.call(what, list(conn))
+}
 
 #' Wait for any PostgreSQL notification
 #'

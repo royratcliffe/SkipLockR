@@ -2,4 +2,5 @@
 
 export(postgresDefaultDBPool)
 export(waitForNotify)
+export(withConnection)
 export(withTransaction)
