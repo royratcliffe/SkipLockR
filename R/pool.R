@@ -20,6 +20,15 @@ postgresDefaultDBPool <- function(...) {
 #' @export
 withTransaction <- function(func) pool::poolWithTransaction(db$pool, func)
 
+#' Call function with pooled connection
+#' @param what Called with one database connection argument
+#' @export
+withConnection <- function(what) {
+  conn <- pool::poolCheckout(db$pool)
+  on.exit(pool::poolReturn(conn))
+  do.call(what, list(conn))
+}
+
 #' Wait for any PostgreSQL notification
 #'
 #' Uses the default pool. The default pool uses the default PostgreSQL
