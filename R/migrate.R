@@ -10,7 +10,7 @@
 #' @param dir Migration directory
 #' @param name Migration table
 #' @export
-migrate <- function(dir, name = DBI::Id(schema = "schema", table = "migrations")) {
+migrateSchema <- function(dir, name = DBI::Id(schema = "schema", table = "migrations")) {
   files <- sort(tools::list_files_with_exts(dir, "R"))
   names(files) <- tools::file_path_sans_ext(basename(files))
   repeat {
