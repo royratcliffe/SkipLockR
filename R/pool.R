@@ -33,7 +33,9 @@ withConnection <- function(what) {
 #' Wait for any PostgreSQL notification
 #'
 #' Uses the default pool. The default pool uses the default PostgreSQL
-#' connection.
+#' connection. Be careful when using a pool for notification. You must
+#' first listen on the channel or channels for which your application
+#' requires notification. Listening is a connection-oriented activity.
 #'
 #' @param ... Extra arguments for PostgreSQL notification wait,
 #'   \code{RPostgres::\link[RPostgres]{postgresWaitForNotify}}.
